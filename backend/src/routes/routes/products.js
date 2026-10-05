@@ -5,17 +5,33 @@ const router = express.Router();
 const products = [
   {
     id: 1,
-    name: "Sample Product",
-    price: 999,
+    name: "Samsung Galaxy S25",
+    price: 79999,
+    category: "Mobiles",
+    image: "https://via.placeholder.com/300"
+  },
+  {
+    id: 2,
+    name: "Apple iPhone 16",
+    price: 69999,
+    category: "Mobiles",
+    image: "https://via.placeholder.com/300"
+  },
+  {
+    id: 3,
+    name: "Sony WH-1000XM5",
+    price: 29999,
     category: "Electronics",
     image: "https://via.placeholder.com/300"
   }
 ];
 
+// Get all products
 router.get("/", (req, res) => {
   res.json(products);
 });
 
+// Get product by ID
 router.get("/:id", (req, res) => {
   const product = products.find(
     (item) => item.id === Number(req.params.id)
@@ -30,3 +46,4 @@ router.get("/:id", (req, res) => {
   res.json(product);
 });
 
+module.exports = router;
