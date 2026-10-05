@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Flipkart Pro — Online Marketplace</title>
+  <meta name="description" content="A modern and secure online marketplace.">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f5f6f8;
+      color: #172033;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 14px 5%;
+      display: flex;
+      align-items: center;
+      gap: 25px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .logo span {
+      color: #f59e0b;
+    }
+
+    .search {
+      flex: 1;
+      max-width: 650px;
+      display: flex;
+      background: white;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .search input {
+      flex: 1;
+      border: 0;
+      padding: 13px 16px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search button {
+      border: 0;
+      background: #f59e0b;
+      padding: 0 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .cart {
+      background: transparent;
+      color: white;
+      border: 1px solid #4b5563;
+      padding: 10px 15px;
+      border-radius: 7px;
+      cursor: pointer;
+    }
+
+    .hero {
+      margin: 25px auto;
+      width: 90%;
+      max-width: 1300px;
+      min-height: 280px;
+      border-radius: 18px;
+      padding: 55px;
+      background: linear-gradient(135deg, #111827, #263449);
+      color: white;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 58px);
+      margin-bottom: 15px;
+    }
+
+    .hero p {
+      color: #d1d5db;
+      font-size: 18px;
+      margin-bottom: 25px;
+      max-width: 600px;
+    }
+
+    .shop-btn {
+      background: #f59e0b;
+      color: #111827;
+      border: 0;
+      padding: 13px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .section {
+      width: 90%;
+      max-width: 1300px;
+      margin: 35px auto;
+    }
+
+    .section-title {
+      margin-bottom: 18px;
+      font-size: 26px;
+    }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+    }
+
+    .category {
+      background: white;
+      border-radius: 12px;
+      padding: 22px;
+      text-align: center;
+      cursor: pointer;
+      border: 1px solid #e5e7eb;
+      transition: transform .2s;
+    }
+
+    .category:hover {
+      transform: translateY(-4px);
+    }
+
+    .category-icon {
+      font-size: 35px;
+      margin-bottom: 10px;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .product {
+      background: white;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid #e5e7eb;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    }
+
+    .product-image {
+      height: 210px;
+      background: #eef1f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 70px;
+    }
+
+    .product-info {
+      padding: 17px;
+    }
+
+    .product-name {
+      font-size: 17px;
+      font-weight: 700;
+      margin-bottom: 9px;
+    }
+
+    .rating {
+      font-size: 13px;
+      margin-bottom: 10px;
+      color: #d97706;
+    }
+
+    .price {
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .mrp {
+      text-decoration: line-through;
+      color: #9ca3af;
+      font-size: 13px;
+      margin-left: 7px;
+    }
+
+    .discount {
+      color: #15803d;
+      font-size: 13px;
+      margin-left: 7px;
+    }
+
+    .add-btn {
+      width: 100%;
+      margin-top: 13px;
+      padding: 10px;
+      border: 0;
+      border-radius: 7px;
+      background: #111827;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 60px;
+      background: #111827;
+      color: #d1d5db;
+      padding: 35px 5%;
+      text-align: center;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        flex-wrap: wrap;
+      }
+
+      .search {
+        order: 3;
+        flex-basis: 100%;
+      }
+
+      .hero {
+        padding: 35px 25px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">Market<span>Pro</span></div>
+
+    <div class="search">
+      <input id="searchInput" type="search"
+             placeholder="Search products...">
+      <button onclick="searchProducts()">Search</button>
+    </div>
+
+    <button class="cart" onclick="showCart()">
+      🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div>
+        <h1>Everything You Need.</h1>
+        <p>
+          Discover great products, simple shopping and a secure
+          marketplace experience.
+        </p>
+        <button class="shop-btn"
+                onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+          Shop Now
+        </button>
+      </div>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Shop by Category</h2>
+
+      <div class="categories">
+        <div class="category">
+          <div class="category-icon">📱</div>
+          <strong>Electronics</strong>
+        </div>
+
+        <div class="category">
+          <div class="category-icon">👕</div>
+          <strong>Fashion</strong>
+        </div>
+
+        <div class="category">
+          <div class="category-icon">🏠</div>
+          <strong>Home</strong>
+        </div>
+
+        <div class="category">
+          <div class="category-icon">💻</div>
+          <strong>Computers</strong>
+        </div>
+
+        <div class="category">
+          <div class="category-icon">🎧</div>
+          <strong>Audio</strong>
+        </div>
+
+        <div class="category">
+          <div class="category-icon">⌚</div>
+          <strong>Accessories</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="products">
+
+      <h2 class="section-title">Featured Products</h2>
+
+      <div class="products">
+
+        <div class="product">
+          <div class="product-image">📱</div>
+
+          <div class="product-info">
+            <div class="product-name">Smartphone Pro</div>
+            <div class="rating">⭐ 4.6 · 2,341 ratings</div>
+
+            <span class="price">₹39,999</span>
+            <span class="mrp">₹49,999</span>
+            <span class="discount">20% off</span>
+
+            <button class="add-btn"
+                    onclick="addToCart('Smartphone Pro')">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="product-image">💻</div>
+
+          <div class="product-info">
+            <div class="product-name">UltraBook Laptop</div>
+            <div class="rating">⭐ 4.5 · 1,208 ratings</div>
+
+            <span class="price">₹64,990</span>
+            <span class="mrp">₹79,990</span>
+            <span class="discount">18% off</span>
+
+            <button class="add-btn"
+                    onclick="addToCart('UltraBook Laptop')">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="product-image">🎧</div>
+
+          <div class="product-info">
+            <div class="product-name">Wireless Headphones</div>
+            <div class="rating">⭐ 4.4 · 986 ratings</div>
+
+            <span class="price">₹2,499</span>
+            <span class="mrp">₹4,999</span>
+            <span class="discount">50% off</span>
+
+            <button class="add-btn"
+                    onclick="addToCart('Wireless Headphones')">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+        <div class="product">
+          <div class="product-image">⌚</div>
+
+          <div class="product-info">
+            <div class="product-name">Smart Watch</div>
+            <div class="rating">⭐ 4.3 · 754 ratings</div>
+
+            <span class="price">₹3,999</span>
+            <span class="mrp">₹7,999</span>
+            <span class="discount">50% off</span>
+
+            <button class="add-btn"
+                    onclick="addToCart('Smart Watch')">
+              Add to Cart
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <p>©️ 2026 MarketPro. All rights reserved.</p>
+    <p style="margin-top:8px;">
+      Secure shopping · Trusted payments · Easy returns
+    </p>
+  </footer>
+
+  <script>
+    let cartCount = 0;
+
+    function addToCart(product) {
+      cartCount++;
+      document.getElementById("cartCount").textContent = cartCount;
+
+      alert(product + " added to cart!");
+    }
+
+    function showCart() {
+      if (cartCount === 0) {
+        alert("Your cart is empty.");
+      } else {
+        alert("You have " + cartCount + " item(s) in your cart.");
+      }
+    }
+
+    function searchProducts() {
+      const query =
+        document.getElementById("searchInput").value.trim();
+
+      if (!query) {
+        alert("Please enter a product name.");
+        return;
+      }
+
+      alert("Searching for: " + query);
+    }
+  </script>
+
+</body>
+</html>
